@@ -118,7 +118,6 @@ def reg_all(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback(call):
     bot.send_message(call.message.chat.id, 'Хорошо!')
-    allergy = ""
     global allergy
     products = ["молоко", "яйцо", "пшеница", "рыба", "орехи", "грибы", "курица", "шоколад", "кофе", "картофель",
                 "лимон", "рис", "перец"]
