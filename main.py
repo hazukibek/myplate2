@@ -81,7 +81,7 @@ def reg_height(message):
     height = int(message.text)
     bot.send_message(message.chat.id, "Сколько Вы весите в киллограммах?")
     bot.register_next_step_handler(message, reg_weight)
-
+    
 
 def reg_weight(message):
     global weight
@@ -95,44 +95,6 @@ def reg_weight(message):
     markup.add(button1, button2, button3, button4, button5)
     bot.send_message(message.chat.id, "Ваша степень физической активности:", reply_markup=markup)
     bot.register_next_step_handler(message, reg_all)
-
-
-def reg_all(message):
-    markup_inline = types.InlineKeyboardMarkup(row_width=3)
-    item1 = types.InlineKeyboardButton(text='➖Молоко', callback_data='молоко')
-    item2 = types.InlineKeyboardButton(text='➖Яйцо', callback_data='яйцо')
-    item3 = types.InlineKeyboardButton(text='➖Пшеница', callback_data='пшеница')
-    item4 = types.InlineKeyboardButton(text='➖Рыба', callback_data='рыба')
-    item5 = types.InlineKeyboardButton(text='➖Орехи', callback_data='орехи')
-    item6 = types.InlineKeyboardButton(text='➖Грибы', callback_data='грибы')
-    item7 = types.InlineKeyboardButton(text="➖Курица", callback_data='курица')
-    item8 = types.InlineKeyboardButton(text='➖Шоколад', callback_data='шоколад')
-    item9 = types.InlineKeyboardButton(text='➖Кофе', callback_data='кофе')
-    item10 = types.InlineKeyboardButton(text='➖Картофель', callback_data='картофель')
-    item11 = types.InlineKeyboardButton(text='➖Лимон', callback_data='лимон')
-    item12 = types.InlineKeyboardButton(text='➖Рис', callback_data='рис')
-    item13 = types.InlineKeyboardButton(text='➖Перец', callback_data='перец')
-    item14 = types.InlineKeyboardButton(text='Ок', callback_data='ок')
-    markup_inline.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14)
-    bot.send_message(message.chat.id, "На какие продукты у Вас аллергия?", reply_markup=markup_inline)
-    global allergy
-
-
-@bot.callback_query_handler(func=lambda call: True)
-def callback(call):
-    if call.data == "ок":
-        bot.send_message(call.message.chat.id, 'Хорошо!')
-    else:
-        products = ["молоко", "яйцо", "пшеница", "рыба", "орехи", "грибы", "курица", "шоколад", "кофе", "картофель",
-                "лимон", "рис", "перец"]
-        for i in range(0, 14):
-            if call.data == products[i]:
-                bot.send_message(call.message.chat.id, str(i) +"." + call.data)
-                allergy = allergy + call.data + ","
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-        button1 = types.KeyboardButton("Подтверждаю")
-        markup.add(button1)
-        bot.send_message(call.message.chat.id, "Ваш список аллергии: " + allergy + ". Вы уверены?", reply_markup=markup)
     
     
 @bot.message_handler(content_types=['text'])
@@ -159,9 +121,51 @@ def reg_phy(message):
                      "Бот расчитывает количество калорий по формуле Миффлина-Сан Жеора- одной из самых последних формул расчета калорий для оптимального похудения или сохранения нормального веса.")
     bot.send_message(message.chat.id,
                      "Необходимое количество килокалорий (ккал) в сутки для Вас = " + str(call) + " " + "ккал")
-    bot.send_message(message.chat.id, "Нажмите /save для сохранения данных ")
+    
+    
+def reg_all(message):
+    markup_inline = types.InlineKeyboardMarkup(row_width=3)
+    item1 = types.InlineKeyboardButton(text='➖Молоко', callback_data='молоко')
+    item2 = types.InlineKeyboardButton(text='➖Яйцо', callback_data='яйцо')
+    item3 = types.InlineKeyboardButton(text='➖Пшеница', callback_data='пшеница')
+    item4 = types.InlineKeyboardButton(text='➖Рыба', callback_data='рыба')
+    item5 = types.InlineKeyboardButton(text='➖Орехи', callback_data='орехи')
+    item6 = types.InlineKeyboardButton(text='➖Грибы', callback_data='грибы')
+    item7 = types.InlineKeyboardButton(text="➖Курица", callback_data='курица')
+    item8 = types.InlineKeyboardButton(text='➖Шоколад', callback_data='шоколад')
+    item9 = types.InlineKeyboardButton(text='➖Кофе', callback_data='кофе')
+    item10 = types.InlineKeyboardButton(text='➖Картофель', callback_data='картофель')
+    item11 = types.InlineKeyboardButton(text='➖Лимон', callback_data='лимон')
+    item12 = types.InlineKeyboardButton(text='➖Рис', callback_data='рис')
+    item13 = types.InlineKeyboardButton(text='➖Перец', callback_data='перец')
+    item14 = types.InlineKeyboardButton(text='Ок', callback_data='ок')
+    markup_inline.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14)
+    bot.send_message(message.chat.id, "На какие продукты у Вас аллергия?", reply_markup=markup_inline)
+    global allergy
 
 
+@bot.callback_query_handler(func=lambda call: True)
+def callback(call):
+    if call.data == "ок":
+        bot.send_message(call.message.chat.id, 'Хорошо!')
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        button1 = types.KeyboardButton("Подтверждаю")
+        markup.add(button1)
+        bot.send_message(call.message.chat.id, "Ваш список аллергии: " + allergy + ". Вы уверены?", reply_markup=markup)
+    else:
+        products = ["молоко", "яйцо", "пшеница", "рыба", "орехи", "грибы", "курица", "шоколад", "кофе", "картофель",
+                "лимон", "рис", "перец"]
+        for i in range(0, 14):
+            if call.data == products[i]:
+                bot.send_message(call.message.chat.id, str(i) +"." + call.data)
+                allergy = allergy + call.data + ","
+
+
+@bot.message_handler(content_types=['text'])
+def reg_save(message): 
+    bot.send_message(message.chat.id, "Нажмите /save для сохранения данных ")               
+                
+                
 @bot.message_handler(commands=['save'])
 def save(message):
     bot.send_message(message.chat.id, 'Данные сохранены')
