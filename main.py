@@ -11,7 +11,7 @@ server = Flask(__name__)
 logger = telebot.logger
 logger.setLevel(logging.DEBUG)
 
-path = '\users.xlsx'
+path = 'users.xlsx'
 wb_obj = openpyxl.load_workbook(path)
 sheet_obj = wb_obj.active
 user_id = ""
