@@ -1,6 +1,7 @@
 import os
 import telebot
 import logging
+import openpyxl
 from config import *
 from flask import Flask, request
 from telebot import types
@@ -9,6 +10,18 @@ bot = telebot.TeleBot(BOT_TOKEN)
 server = Flask(__name__)
 logger = telebot.logger
 logger.setLevel(logging.DEBUG)
+
+path = 'C:\Users\Asus\PycharmProjects\myplate\users.xlsx'
+wb_obj = openpyxl.load_workbook(path)
+sheet_obj = wb_obj.active
+user_id = ""
+username = ""
+A = 0
+name = ""
+age = 0
+height = 0
+weight = 0
+sex = ""
 
 
 @bot.message_handler(commands=['start'])
