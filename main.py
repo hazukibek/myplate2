@@ -148,16 +148,16 @@ def reg_all(message):
 def callback(call):
      products = ["молоко", "яйцо", "пшеница", "рыба", "орехи", "грибы", "курица", "шоколад", "кофе", "картофель",
                 "лимон", "рис", "перец"]
-        for i in range(0, 14):
-            if call.data == products[i]:
-                bot.send_message(call.message.chat.id, str(i) +"." + call.data)
-                allergy = allergy + call.data + ","
-            elif call.data == "ок":
-                bot.send_message(call.message.chat.id, 'Хорошо!')
-                markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-                button1 = types.KeyboardButton("Подтверждаю")
-                markup.add(button1)
-                bot.send_message(call.message.chat.id, "Ваш список аллергии: " + allergy + ". Вы уверены?", reply_markup=markup)
+     for i in range(0, 14):
+        if call.data == products[i]:
+            bot.send_message(call.message.chat.id, str(i) +"." + call.data)
+            allergy = allergy + call.data + ","
+        elif call.data == "ок":
+            bot.send_message(call.message.chat.id, 'Хорошо!')
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+            button1 = types.KeyboardButton("Подтверждаю")
+            markup.add(button1)
+            bot.send_message(call.message.chat.id, "Ваш список аллергии: " + allergy + ". Вы уверены?", reply_markup=markup)
 
 
 @bot.message_handler(content_types=['text'])
