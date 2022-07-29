@@ -26,8 +26,8 @@ sex = ""
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    username = message.from_user.username
     global username
+    username = message.from_user.username
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
     yes = types.KeyboardButton("Хорошо")
     markup.add(yes)
