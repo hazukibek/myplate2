@@ -133,7 +133,6 @@ def callback(call):
         button1 = types.KeyboardButton("Подтверждаю")
         markup.add(button1)
         bot.send_message(call.message.chat.id, "Ваш список аллергии: " + allergy + ". Вы уверены?", reply_markup=markup)
-    bot.register_next_step_handler(callback, reg_phy)
     
     
 @bot.message_handler(content_types=['text'])
