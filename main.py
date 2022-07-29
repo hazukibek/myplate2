@@ -122,7 +122,7 @@ def reg_all(message):
 def callback(call):
      products = ["молоко", "яйцо", "пшеница", "рыба", "орехи", "грибы", "курица", "шоколад", "кофе", "картофель",
                 "лимон", "рис", "перец"]
-     for i in range(0, 14):
+     for i in range(0, 13):
         if call.data == products[i]:
             bot.send_message(call.message.chat.id, str(i) +"." + call.data)
             allergy = allergy + call.data + ","
