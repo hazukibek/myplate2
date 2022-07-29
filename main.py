@@ -127,7 +127,7 @@ def callback(call):
                 "лимон", "рис", "перец"]
         for i in range(0, 14):
             if call.data == products[i]:
-                bot.send_message(callback.message.chat.id, int(i) +"." + call.data)
+                bot.send_message(call.message.chat.id, int(i) +"." + call.data)
                 allergy = allergy + call.data + ","
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         button1 = types.KeyboardButton("Подтверждаю")
