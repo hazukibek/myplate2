@@ -22,6 +22,7 @@ age = 0
 height = 0
 weight = 0
 sex = ""
+allergy = ""
 
 
 @bot.message_handler(commands=['start'])
@@ -115,7 +116,6 @@ def reg_all(message):
     markup_inline.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14)
     bot.send_message(message.chat.id, "На какие продукты у Вас аллергия?", reply_markup=markup_inline)
     global allergy
-    allergy = ""
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -127,10 +127,16 @@ def callback(call):
                 "лимон", "рис", "перец"]
         for i in range(0, 14):
             if call.data == products[i]:
+                bot.send_message(callback.chat.id, int(i) +"." + call.data)
                 allergy = allergy + call.data + ","
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        button1 = types.KeyboardButton("Подтверждаю")
+        markup.add(button1)
+        bot.send_message(call.message.chat.id, "Ваш список аллергии: " + allergy + ". Вы уверены?", reply_markup=markup)
     bot.register_next_step_handler(callback, reg_phy)
-
-
+    
+    
+@bot.message_handler(content_types=['text'])
 def reg_phy(message):
     global phy
     global A
