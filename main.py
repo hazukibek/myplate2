@@ -97,32 +97,6 @@ def reg_weight(message):
     bot.register_next_step_handler(message, reg_all)
     
     
-@bot.message_handler(content_types=['text'])
-def reg_phy(message):
-    global phy
-    global A
-    phy = message.text
-    bot.reply_to(message, 'Cпасибо за информацию!', reply_markup=types.ReplyKeyboardRemove())
-    if phy == "Минимальная активность":
-        A = 1.2
-    elif phy == "Слабая активность: раз в неделю":
-        A = 1.375
-    elif phy == "Средняя активность: 3 раза в неделю":
-        A = 1.55
-    elif phy == "Высокая активность: почти каждый день":
-        A = 1.725
-    elif phy == "Экстра-активность: тяжелая физическая работа; спорт":
-        A = 1.9
-    else:
-        bot.send_message(message.chat.id, "invalid data")
-    global call
-    call = (10 * weight + 6.25 * height - 5 * age + f) * A
-    bot.send_message(message.chat.id,
-                     "Бот расчитывает количество калорий по формуле Миффлина-Сан Жеора- одной из самых последних формул расчета калорий для оптимального похудения или сохранения нормального веса.")
-    bot.send_message(message.chat.id,
-                     "Необходимое количество килокалорий (ккал) в сутки для Вас = " + str(call) + " " + "ккал")
-    
-    
 def reg_all(message):
     markup_inline = types.InlineKeyboardMarkup(row_width=3)
     item1 = types.InlineKeyboardButton(text='➖Молоко', callback_data='молоко')
@@ -152,13 +126,39 @@ def callback(call):
         if call.data == products[i]:
             bot.send_message(call.message.chat.id, str(i) +"." + call.data)
             allergy = allergy + call.data + ","
-        elif call.data == "ок":
-            bot.send_message(call.message.chat.id, 'Хорошо!')
-            markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-            button1 = types.KeyboardButton("Подтверждаю")
-            markup.add(button1)
-            bot.send_message(call.message.chat.id, "Вы уверены?", reply_markup=markup)
+     if call.data == "ок":
+        bot.send_message(call.message.chat.id, 'Хорошо!')
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        button1 = types.KeyboardButton("Подтверждаю")
+        markup.add(button1)
+        bot.send_message(call.message.chat.id, "Вы уверены?", reply_markup=markup)
 
+
+@bot.message_handler(content_types=['text'])
+def reg_phy(message):
+    global phy
+    global A
+    phy = message.text
+    bot.reply_to(message, 'Cпасибо за информацию!', reply_markup=types.ReplyKeyboardRemove())
+    if phy == "Минимальная активность":
+        A = 1.2
+    elif phy == "Слабая активность: раз в неделю":
+        A = 1.375
+    elif phy == "Средняя активность: 3 раза в неделю":
+        A = 1.55
+    elif phy == "Высокая активность: почти каждый день":
+        A = 1.725
+    elif phy == "Экстра-активность: тяжелая физическая работа; спорт":
+        A = 1.9
+    else:
+        bot.send_message(message.chat.id, "invalid data")
+    global call
+    call = (10 * weight + 6.25 * height - 5 * age + f) * A
+    bot.send_message(message.chat.id,
+                     "Бот расчитывает количество калорий по формуле Миффлина-Сан Жеора- одной из самых последних формул расчета калорий для оптимального похудения или сохранения нормального веса.")
+    bot.send_message(message.chat.id,
+                     "Необходимое количество килокалорий (ккал) в сутки для Вас = " + str(call) + " " + "ккал")
+            
 
 @bot.message_handler(content_types=['text'])
 def reg_save(message): 
