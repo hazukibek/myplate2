@@ -111,20 +111,24 @@ def reg_all(message):
     item11 = types.InlineKeyboardButton(text='➖Лимон', callback_data='лимон')
     item12 = types.InlineKeyboardButton(text='➖Рис', callback_data='рис')
     item13 = types.InlineKeyboardButton(text='➖Перец', callback_data='перец')
-    markup_inline.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13)
+    item14 = types.InlineKeyboardButton(text='Ок', callback_data='ок')
+    markup_inline.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14)
     bot.send_message(message.chat.id, "На какие продукты у Вас аллергия?", reply_markup=markup_inline)
+    global allergy
+    allergy = ""
 
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback(call):
-    bot.send_message(call.message.chat.id, 'Хорошо!')
-    global allergy
-    products = ["молоко", "яйцо", "пшеница", "рыба", "орехи", "грибы", "курица", "шоколад", "кофе", "картофель",
+    if call.data == "ок":
+        bot.send_message(call.message.chat.id, 'Хорошо!')
+    else:
+        products = ["молоко", "яйцо", "пшеница", "рыба", "орехи", "грибы", "курица", "шоколад", "кофе", "картофель",
                 "лимон", "рис", "перец"]
-    for i in range(0, 14):
-        if call.data == products[i]:
-            allergy = allergy + call.data
-    bot.register_next_step_handler(callback, reg_all)
+        for i in range(0, 14):
+            if call.data == products[i]:
+                allergy = allergy + call.data + ","
+    bot.register_next_step_handler(callback, reg_phy)
 
 
 def reg_phy(message):
