@@ -179,16 +179,22 @@ def save(message):
     sheet_obj.cell(row=sheet_obj.max_row + 1, column=9).value = allergy
 
 
-@bot.message_handler(commands=['begin'])
-def buttons(message):
+@bot.message_handler(commands=['receipt'])
+def receipt(message):
+    bot.send_message(message.chat.id, 'Здоровое питание обеспечивает нормальное развитие и жизнедеятельность человека, способствует укреплению его здоровья и профилактике заболеваний. Здоровое питание − залог долгой жизни. Для хорошего самочувствия, правильного функционирования органов нам необходимо питаться качественной пищей. Разнообразие фруктов и овощей на вашем столе, кисломолочная и молочная продукция, орехи и злаки, это и есть здоровое питание! Мы постарались собрать для вас лучшие рецепты салатов, первых и вторых блюд, десертов и выпечки с максимальной пользой для вашего здоровья! 💚')
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-    receipt = types.KeyboardButton("Рецепты")
-    data = types.KeyboardButton("Моя персональная информация")
-    info = types.KeyboardButton("О боте")
-    exits = types.KeyboardButton("Выход")
-    markup.add(receipt, data)
-    markup.add(info, exits)
-    bot.send_message(message.chat.id, 'Выберите действие на меню', reply_markup=markup)
+    button1 = types.KeyboardButton(text='Рецепты салатов')
+    button2 = types.KeyboardButton(text='Первые блюда')
+    button3 = types.KeyboardButton(text='Вторые блюда')
+    button4 = types.KeyboardButton(text='Национальные блюда')
+    button5 = types.KeyboardButton(text='Выпечка')
+    button6 = types.KeyboardButton(text='Разное')
+    button7 = types.KeyboardButton(text='Десерты и сладости')
+    button8 = types.KeyboardButton(text='Заготовки, соленья, варенья')
+    button9 = types.KeyboardButton(text='Соусы')
+    button10 = types.KeyboardButton(text='Рецепты для мультиварок')
+    markup.row(button1, button2, button3, button4, button5)
+    markup.row(button6, button7, button8, button9, button10)
 
 
 @bot.message_handler(content_types=['text'])
