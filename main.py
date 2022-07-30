@@ -210,20 +210,19 @@ def get_user_text(message):
     buttons = ""
     if message.text.lower() == 'Рецепты салатов':
         salats = ["Овощной салат с дайконом и кунжутом", "Салат с сыром бурата", "Летний салат из огурцов"]
-        for i in range(0,3):
-            button+i = types.KeyboardButton(text=salats[i])
-            buttons = buttons + button+i + ", "
-        markup.add(buttons)
+        for i in range(0, 3):
+            button = types.KeyboardButton(text=salats[i])
+            markup.add(button)
         bot.register_next_step_handler(message, get_text)
-        
-        
+
+
 def get_text(message):
     global food
     food = message.text
-    for i in range (1, 5):
+    for i in range(1, 5):
         if sheet_obj2.cell(row=i, column=1).value == food:
             rec = str(sheet_obj2.cell(row=i, column=3).value)
-            pho = open("myplate2\receipt photo\" + rec + ".png", 'rb')
+            pho = open("myplate2\Рецепты\ " + rec + ".png", "rb")
             bot.send_photo(message.chat.id, pho)
             bot.send_message(message.chat.id, rec)
                        
