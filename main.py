@@ -224,7 +224,7 @@ def get_text(message):
     for i in range(1, 5):
         if sheet_obj2.cell(row=i, column=1).value == food:
             rec = str(sheet_obj2.cell(row=i, column=3).value)
-            pho = open("Рецепты/" + rec + ".png", "rb")
+            pho = open(rec + ".jpg", "rb")
             bot.send_photo(message.chat.id, pho)
             bot.send_message(message.chat.id, rec)
 
