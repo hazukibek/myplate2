@@ -256,15 +256,6 @@ def user_text(message):
         bot.send_message(message.chat.id, '', reply_markup=markup)
 
 
-@bot.message_handler(content_types=['text'])
-def get_user_book(message):
-    book = message.text.lower()
-    path = open("/content/drive/MyDrive/NIS учебники/" + book + ".pdf", "rb")
-    bot.send_message(message.chat.id, "Ищем книгу...")
-    bot.send_document(message.chat.id, path)
-    path.close()
-
-
 @server.route(f"/{BOT_TOKEN}", methods=["POST"])
 def redirect_message():
     json_string = request.get_data().decode("utf-8")
