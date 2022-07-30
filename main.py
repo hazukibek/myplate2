@@ -11,9 +11,12 @@ server = Flask(__name__)
 logger = telebot.logger
 logger.setLevel(logging.DEBUG)
 
-path = 'users.xlsx'
+path = 'myplate2\users.xlsx'
+path2 = "myplate2\user_food.xlsx"
 wb_obj = openpyxl.load_workbook(path)
 sheet_obj = wb_obj.active
+wb_obj2 = openpyxl.load_workbook(path2)
+sheet_obj2 = wb_obj2.active
 user_id = ""
 username = ""
 A = 0
@@ -23,6 +26,7 @@ height = 0
 weight = 0
 sex = ""
 allergy = ""
+food = ""
 
 
 @bot.message_handler(commands=['start'])
@@ -197,6 +201,31 @@ def receipt(message):
     button10 = types.KeyboardButton(text='Рецепты для мультиварок')
     markup.row(button1, button2, button3, button4, button5)
     markup.row(button6, button7, button8, button9, button10)
+    bot.register_next_step_handler(message, get_user_text)
+    
+    
+@bot.message_handler(content_types=['text'])
+def get_user_text(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    buttons = ""
+    if message.text.lower() == 'Рецепты салатов':
+        salats = ["Овощной салат с дайконом и кунжутом", "Салат с сыром бурата", "Летний салат из огурцов"]
+        for i in range(0,3):
+            button+i = types.KeyboardButton(text=salats[i])
+            buttons = buttons + button+i + ", "
+        markup.add(buttons)
+        bot.register_next_step_handler(message, get_text)
+        
+        
+def get_text(message):
+    global food
+    food = message.text
+    for i in range (1, 5):
+        if sheet_obj2.cell(row=i, column=1).value = food:
+            rec = str(sheet_obj2.cell(row=i, column=3).value)
+            pho = open("myplate2\receipt photo\" + rec + ".png", 'rb')
+            bot.send_photo(message.chat.id, pho)
+            bet.send_message(message.chat.id, rec)
 
 
 @bot.message_handler(content_types=['text'])
