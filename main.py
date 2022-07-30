@@ -11,8 +11,8 @@ server = Flask(__name__)
 logger = telebot.logger
 logger.setLevel(logging.DEBUG)
 
-path = '/users.xlsx'
-path2 = '/user_food.xlsx'
+path = 'users.xlsx'
+path2 = 'user_food.xlsx'
 wb_obj = openpyxl.load_workbook(path)
 sheet_obj = wb_obj.active
 wb_obj2 = openpyxl.load_workbook(path2)
@@ -224,7 +224,7 @@ def get_text(message):
     for i in range(1, 5):
         if sheet_obj2.cell(row=i, column=1).value == food:
             rec = str(sheet_obj2.cell(row=i, column=3).value)
-            pho = open("myplate2/Рецепты/" + rec + ".png", "rb")
+            pho = open("Рецепты/" + rec + ".png", "rb")
             bot.send_photo(message.chat.id, pho)
             bot.send_message(message.chat.id, rec)
 
