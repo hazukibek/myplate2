@@ -11,8 +11,8 @@ server = Flask(__name__)
 logger = telebot.logger
 logger.setLevel(logging.DEBUG)
 
-path = 'myplate2\users.xlsx'
-path2 = "myplate2\user_food.xlsx"
+path = '/users.xlsx'
+path2 = '/user_food.xlsx'
 wb_obj = openpyxl.load_workbook(path)
 sheet_obj = wb_obj.active
 wb_obj2 = openpyxl.load_workbook(path2)
@@ -85,7 +85,7 @@ def reg_height(message):
     height = int(message.text)
     bot.send_message(message.chat.id, "Сколько Вы весите в киллограммах?")
     bot.register_next_step_handler(message, reg_weight)
-    
+
 
 def reg_weight(message):
     global weight
@@ -99,8 +99,8 @@ def reg_weight(message):
     markup.add(button1, button2, button3, button4, button5)
     bot.send_message(message.chat.id, "Ваша степень физической активности:", reply_markup=markup)
     bot.register_next_step_handler(message, reg_all)
-    
-    
+
+
 def reg_all(message):
     global phy
     phy = message.text
@@ -119,20 +119,21 @@ def reg_all(message):
     item12 = types.InlineKeyboardButton(text='➖Рис', callback_data='рис')
     item13 = types.InlineKeyboardButton(text='➖Перец', callback_data='перец')
     item14 = types.InlineKeyboardButton(text='Ок', callback_data='ок')
-    markup_inline.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14)
+    markup_inline.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13,
+                      item14)
     bot.send_message(message.chat.id, "На какие продукты у Вас аллергия?", reply_markup=markup_inline)
     global allergy
 
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback(call):
-     products = ["молоко", "яйцо", "пшеница", "рыба", "орехи", "грибы", "курица", "шоколад", "кофе", "картофель",
+    products = ["молоко", "яйцо", "пшеница", "рыба", "орехи", "грибы", "курица", "шоколад", "кофе", "картофель",
                 "лимон", "рис", "перец"]
-     for i in range(0, 13):
+    for i in range(0, 13):
         if call.data == products[i]:
-            bot.send_message(call.message.chat.id, str(i) +"." + call.data)
+            bot.send_message(call.message.chat.id, str(i) + "." + call.data)
             allergy = allergy + call.data + ","
-     if call.data == "ок":
+    if call.data == "ок":
         bot.send_message(call.message.chat.id, 'Хорошо!')
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         button1 = types.KeyboardButton("Подтверждаю")
@@ -163,14 +164,14 @@ def reg_phy(message):
                      "Бот расчитывает количество калорий по формуле Миффлина-Сан Жеора- одной из самых последних формул расчета калорий для оптимального похудения или сохранения нормального веса....")
     bot.send_message(message.chat.id,
                      "Необходимое количество килокалорий (ккал) в сутки для Вас = " + str(call) + " " + "ккал")
-    
+
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
     button1 = types.KeyboardButton("Сохранить данные")
     markup.add(button1)
-    msg=bot.send_message(message.chat.id, "Нажмите кнопку для сохранения данных ", reply_markup=markup)
+    msg = bot.send_message(message.chat.id, "Нажмите кнопку для сохранения данных ", reply_markup=markup)
     bot.register_next_step_handler(msg, save)
-                
-                
+
+
 @bot.message_handler(content_types=['text'])
 def save(message):
     bot.send_message(message.chat.id, 'Данные сохранены')
@@ -187,7 +188,8 @@ def save(message):
 
 @bot.message_handler(commands=['receipt'])
 def receipt(message):
-    bot.send_message(message.chat.id, 'Здоровое питание обеспечивает нормальное развитие и жизнедеятельность человека, способствует укреплению его здоровья и профилактике заболеваний. Здоровое питание − залог долгой жизни. Для хорошего самочувствия, правильного функционирования органов нам необходимо питаться качественной пищей. Разнообразие фруктов и овощей на вашем столе, кисломолочная и молочная продукция, орехи и злаки, это и есть здоровое питание! Мы постарались собрать для вас лучшие рецепты салатов, первых и вторых блюд, десертов и выпечки с максимальной пользой для вашего здоровья! 💚')
+    bot.send_message(message.chat.id,
+                     'Здоровое питание обеспечивает нормальное развитие и жизнедеятельность человека, способствует укреплению его здоровья и профилактике заболеваний. Здоровое питание − залог долгой жизни. Для хорошего самочувствия, правильного функционирования органов нам необходимо питаться качественной пищей. Разнообразие фруктов и овощей на вашем столе, кисломолочная и молочная продукция, орехи и злаки, это и есть здоровое питание! Мы постарались собрать для вас лучшие рецепты салатов, первых и вторых блюд, десертов и выпечки с максимальной пользой для вашего здоровья! 💚')
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
     button1 = types.KeyboardButton(text='Рецепты салатов')
     button2 = types.KeyboardButton(text='Первые блюда')
@@ -202,8 +204,8 @@ def receipt(message):
     markup.row(button1, button2, button3, button4, button5)
     markup.row(button6, button7, button8, button9, button10)
     bot.register_next_step_handler(message, get_user_text)
-    
-    
+
+
 @bot.message_handler(content_types=['text'])
 def get_user_text(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
@@ -222,17 +224,19 @@ def get_text(message):
     for i in range(1, 5):
         if sheet_obj2.cell(row=i, column=1).value == food:
             rec = str(sheet_obj2.cell(row=i, column=3).value)
-            pho = open("myplate2\Рецепты\ " + rec + ".png", "rb")
+            pho = open("myplate2/Рецепты/" + rec + ".png", "rb")
             bot.send_photo(message.chat.id, pho)
             bot.send_message(message.chat.id, rec)
-                       
-                       
+
+
 @bot.message_handler(commands=['data'])
 def data(message):
-   for i in range (0, 10):
-        if sheet_obj.cell(row=i, column=2).value = username:
-            txt = "Имя- " + sheet_obj.cell(row=i, column=3).value + "\n" + "Возраст: " + sheet_obj.cell(row=i, column=4).value + "\n" + "Рост: " + sheet_obj.cell(row=i, column=5).value + "\n" + "Вес: " + sheet_obj.cell(row=i, column=6).value
-   bot.send_message(message.chat.id, "Вот ваши сведения:" + "\n" + txt)
+    for i in range(0, 10):
+        if sheet_obj.cell(row=i, column=2).value == username:
+            txt = "Имя- " + sheet_obj.cell(row=i, column=3).value + "\n" + "Возраст: " + sheet_obj.cell(row=i,
+                                                                                                        column=4).value + "\n" + "Рост: " + sheet_obj.cell(
+                row=i, column=5).value + "\n" + "Вес: " + sheet_obj.cell(row=i, column=6).value
+    bot.send_message(message.chat.id, "Вот ваши сведения:" + "\n" + txt)
 
 
 @bot.message_handler(content_types=['text'])
@@ -273,5 +277,3 @@ if __name__ == "__main__":
     bot.remove_webhook()
     bot.set_webhook(url=APP_URL)
     server.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
-
-
