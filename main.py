@@ -160,10 +160,13 @@ def reg_phy(message):
     bot.send_message(message.chat.id,
                      "Необходимое количество килокалорий (ккал) в сутки для Вас = " + str(call) + " " + "ккал")
     
-    bot.send_message(message.chat.id, "Нажмите /save для сохранения данных ")               
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    button1 = types.KeyboardButton("Сохранить данные")
+    markup.add(button1)
+    bot.send_message(message.chat.id, "Нажмите кнопку для сохранения данных ", reply_markup=markup)               
                 
                 
-@bot.message_handler(commands=['save'])
+@bot.message_handler(content_types=['text'])
 def save(message):
     bot.send_message(message.chat.id, 'Данные сохранены')
     sheet_obj.cell(row=sheet_obj.max_row + 1, column=1).value = user_id
