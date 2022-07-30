@@ -162,7 +162,6 @@ def reg_phy(message):
     bot.register_next_step_handler(msg, reg_save)
             
 
-@bot.message_handler(content_types=['text'])
 def reg_save(message): 
     bot.send_message(message.chat.id, "Нажмите /save для сохранения данных ")               
                 
