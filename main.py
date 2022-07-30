@@ -157,12 +157,9 @@ def reg_phy(message):
     call = (10 * weight + 6.25 * height - 5 * age + f) * A
     bot.send_message(message.chat.id,
                      "Бот расчитывает количество калорий по формуле Миффлина-Сан Жеора- одной из самых последних формул расчета калорий для оптимального похудения или сохранения нормального веса....")
-    msg=bot.send_message(message.chat.id,
+    bot.send_message(message.chat.id,
                      "Необходимое количество килокалорий (ккал) в сутки для Вас = " + str(call) + " " + "ккал")
-    bot.register_next_step_handler(msg, reg_save)
-            
-
-def reg_save(message): 
+    
     bot.send_message(message.chat.id, "Нажмите /save для сохранения данных ")               
                 
                 
