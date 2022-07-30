@@ -163,7 +163,8 @@ def reg_phy(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
     button1 = types.KeyboardButton("Сохранить данные")
     markup.add(button1)
-    bot.send_message(message.chat.id, "Нажмите кнопку для сохранения данных ", reply_markup=markup)               
+    msg=bot.send_message(message.chat.id, "Нажмите кнопку для сохранения данных ", reply_markup=markup)
+    bot.register_next_step_handler(msg, save)
                 
                 
 @bot.message_handler(content_types=['text'])
