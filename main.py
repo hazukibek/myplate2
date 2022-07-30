@@ -221,11 +221,19 @@ def get_text(message):
     global food
     food = message.text
     for i in range (1, 5):
-        if sheet_obj2.cell(row=i, column=1).value = food:
+        if sheet_obj2.cell(row=i, column=1).value == food:
             rec = str(sheet_obj2.cell(row=i, column=3).value)
             pho = open("myplate2\receipt photo\" + rec + ".png", 'rb')
             bot.send_photo(message.chat.id, pho)
-            bet.send_message(message.chat.id, rec)
+            bot.send_message(message.chat.id, rec)
+                       
+                       
+@bot.message_handler(commands=['data'])
+def data(message):
+   for i in range (0, 10):
+        if sheet_obj.cell(row=i, column=2).value = username:
+            txt = "Имя- " + sheet_obj.cell(row=i, column=3).value + "\n" + "Возраст: " + sheet_obj.cell(row=i, column=4).value + "\n" + "Рост: " + sheet_obj.cell(row=i, column=5).value + "\n" + "Вес: " + sheet_obj.cell(row=i, column=6).value
+   bot.send_message(message.chat.id, "Вот ваши сведения:" + "\n" + txt)
 
 
 @bot.message_handler(content_types=['text'])
