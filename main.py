@@ -131,7 +131,8 @@ def callback(call):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         button1 = types.KeyboardButton("Подтверждаю")
         markup.add(button1)
-        bot.send_message(call.message.chat.id, "Вы уверены?", reply_markup=markup)
+        msg = bot.send_message(call.message.chat.id, "Вы уверены?", reply_markup=markup)
+        bot.register_next_step_handler(msg, reg_phy)
 
 
 @bot.message_handler(content_types=['text'])
