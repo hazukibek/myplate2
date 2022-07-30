@@ -98,6 +98,8 @@ def reg_weight(message):
     
     
 def reg_all(message):
+    global phy
+    phy = message.text
     markup_inline = types.InlineKeyboardMarkup(row_width=3)
     item1 = types.InlineKeyboardButton(text='➖Молоко', callback_data='молоко')
     item2 = types.InlineKeyboardButton(text='➖Яйцо', callback_data='яйцо')
@@ -137,9 +139,7 @@ def callback(call):
 
 @bot.message_handler(content_types=['text'])
 def reg_phy(message):
-    global phy
     global A
-    phy = message.text
     bot.reply_to(message, 'Cпасибо за информацию!', reply_markup=types.ReplyKeyboardRemove())
     if phy == "Минимальная активность":
         A = 1.2
@@ -156,7 +156,7 @@ def reg_phy(message):
     global call
     call = (10 * weight + 6.25 * height - 5 * age + f) * A
     bot.send_message(message.chat.id,
-                     "Бот расчитывает количество калорий по формуле Миффлина-Сан Жеора- одной из самых последних формул расчета калорий для оптимального похудения или сохранения нормального веса.")
+                     "Бот расчитывает количество калорий по формуле Миффлина-Сан Жеора- одной из самых последних формул расчета калорий для оптимального похудения или сохранения нормального веса....")
     bot.send_message(message.chat.id,
                      "Необходимое количество килокалорий (ккал) в сутки для Вас = " + str(call) + " " + "ккал")
             
